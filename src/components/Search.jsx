@@ -11,33 +11,27 @@ function Search({ data }) {
       entry.programme.toLowerCase().includes(searchField.toLowerCase())
     );
   });
- 
- function showComputing(e) {
-    let isChecked = e.target.checked;
-    console.log(isChecked)
-    if( isChecked){
-    const checked = data.filter((checkedEntry) => {
-        return (
-            checkedEntry.programme.includes("Computing") )
-        });
-        setCheckField(checked)   
-    } else {setCheckField(data)
 
-    }
-  }
+  function handleFilter(e) {
+    const checkedArray = document.querySelectorAll(
+      'input[type="checkbox"]:checked'
+    );
+    let selected = Array.from(checkedArray).map((x) => x.value);
+    console.log(selected);
+    let checked = data;
 
-  function showSD(e) {
-    let isChecked = e.target.checked;
-    console.log(isChecked)
-    if( isChecked){
-    const checked = data.filter((checkedEntry) => {
+    for (let i = 0; i < selected.length; i++) {
+      checked = data.filter((checkedEntry) => {
         return (
-            checkedEntry.programme.includes("Software Development") )
-        });
-        setCheckField(checked)   
-    } else {
-        setCheckField(data);
+          checkedEntry.programme.includes(selected[0]) ||
+          checkedEntry.programme.includes(selected[1])
+        );
+      });
     }
+    if (selected == []) {
+      checked = data;
+    }
+    setCheckField(checked);
   }
 
   return (
@@ -54,26 +48,26 @@ function Search({ data }) {
             className="form-check-input"
             type="checkbox"
             value="Computing"
-            id="flexCheckDefault"  
-            onChange={(e) => showComputing(e)}
+            id="Computing"
+            onChange={(e) => handleFilter(e)}
           />
-          <label class="form-check-label" for="flexCheckDefault">
+          <label class="form-check-label" for="Computing">
             Computing
           </label>
         </div>
       </div>
       <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value="SD"
-            id="flexCheckDefault"  
-            onChange={(e) => showSD(e)}
-          />
-          <label class="form-check-label" for="flexCheckDefault">
-            Software Development
-          </label>
-        </div>
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value="Software Development"
+          id="Software Development"
+          onChange={(e) => handleFilter(e)}
+        />
+        <label class="form-check-label" for="SD">
+          Software Development
+        </label>
+      </div>
 
       <table className="table-style">
         {filtered.map((item) => {
@@ -89,7 +83,6 @@ function Search({ data }) {
         })}
       </table>
 
-
       {/* <table className="table-style">
         {checkField.map((item) => {
           return (
@@ -103,7 +96,6 @@ function Search({ data }) {
           );
         })}
       </table> */}
-
     </div>
   );
 }

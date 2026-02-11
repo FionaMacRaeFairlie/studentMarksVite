@@ -51,7 +51,7 @@ function Search({ data }) {
             id="Computing"
             onChange={(e) => handleFilter(e)}
           />
-          <label class="form-check-label" for="Computing">
+          <label className="form-check-label" htmlFor="Computing">
             Computing
           </label>
         </div>
@@ -64,23 +64,25 @@ function Search({ data }) {
           id="Software Development"
           onChange={(e) => handleFilter(e)}
         />
-        <label class="form-check-label" for="SD">
+        <label className="form-check-label" htmlFor="SD">
           Software Development
         </label>
       </div>
 
       <table className="table-style">
-        {filtered.map((item) => {
-          return (
-            <tr>
-              <td className="name-style">{item.student}</td>{" "}
-              <td>{item.programme}</td>
-              <td>
-                <Item modules={item.modules} />
-              </td>
-            </tr>
-          );
-        })}
+        <tbody>
+          {filtered.map((item) => {
+            return (
+              <tr key={item._id}>
+                <td className="name-style">{item.student}</td>
+                <td>{item.programme}</td>
+                <td>
+                  <Item modules={item.modules} key={item._id} />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
 
       {/* <table className="table-style">
